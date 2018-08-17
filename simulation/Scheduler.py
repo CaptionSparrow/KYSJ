@@ -23,7 +23,8 @@ class Scheduler:
         self.last_assignment = assignment
         return assignment
 
-    def greedy_scheduler2(self, true_model_sample, usage_vector):
+    def rfm_learning(self, true_model_sample, usage_vector):
+        print("---")
         if self.virtual_model.all() == 0:
             self.virtual_model = true_model_sample
         else:

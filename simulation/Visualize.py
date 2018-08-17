@@ -8,8 +8,10 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import animation
 
-SIZE_MIN = 50
-SIZE_MAX = 50 ** 2
+SIZE_MIN = 20
+SIZE_MAX = 20 ** 2
+LINE_MIN = 0.5
+LINE_MAX = 2.0
 NS = 10
 
 pos = np.random.uniform(0, 1, (NS, 2))
@@ -30,8 +32,10 @@ def init():
     size = np.linspace(SIZE_MIN, SIZE_MAX, NS)
 
     # Scatter plot
+    line1, = ax.plot([0.5,0.8],[0.5,0.7], color ='blue', linewidth=LINE_MIN, linestyle="-")
+    line2, = ax.plot([0.9,0.8],[0.1,0.7], color ='blue', linewidth=LINE_MIN, linestyle="-")
     scat = ax.scatter(pos[:,0], pos[:,1], s=size, facecolors=color)
-    line, = ax.plot([0.5,0.8],[0.5,0.7], color ='red', linewidth=1.5, linestyle="-")
+    line = [line1, line2]
 
     # Ensure limits are [0,1] and remove ticks
     ax.set_xlim(0, 1), ax.set_xticks([])
@@ -44,7 +48,7 @@ def update(frame):
 
     # line = ax.plot([0.5,0.8],[0.5,0.7], color ='red', linewidth=1.5, linestyle="-")
     # line.set_data([0.3,0.3],[0.5,0.8])
-    line.set_linewidth(2.0)
+    # line.set_linewidth(LINE_MIN)
 
     # Reset specific ring
     # i = frame % NS
@@ -59,7 +63,8 @@ def update(frame):
     scat.set_offsets(pos)
 
     # Return the modified object
-    return scat, line
+    objects = tuple(line + [scat])
+    return objects
 
 def showAnimation():
     init()

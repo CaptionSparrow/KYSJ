@@ -216,7 +216,7 @@ class BikeScheduler:
         # print(schedules)
 
         # 3 Reinforcement Learning
-        schedules = algo.greedy_scheduler2(np.ceil(flows), np.array(rewards))
+        schedules = algo.rf_learning(np.ceil(flows), np.array(rewards))
         # print(schedules)
 
         return schedules # A set of how much bikes for each station
@@ -304,7 +304,7 @@ class Station:
 
     def run(self):
         while True:
-            print("a new day: %d", self.day)
+            # print("a new day: %d", self.day)
             # Running one day of bike riding
             yield self.env.process(self.one_day())
             # print("one day finish: %d", self.day)
