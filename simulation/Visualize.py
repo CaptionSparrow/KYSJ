@@ -10,9 +10,9 @@ from matplotlib import animation
 
 SIZE_MIN = 20
 SIZE_MAX = 20 ** 2
-LINE_MIN = 0.5
+LINE_MIN = 0.2
 LINE_MAX = 2.0
-NS = 10
+NS = 4
 
 pos = np.random.uniform(0, 1, (NS, 2))
 color = np.ones((NS, 4)) * (0, 0, 0, 1)
@@ -21,6 +21,15 @@ color[:,1] = np.linspace(0, 0.8, NS)
 color[:,2] = np.linspace(0, 1, NS)
 
 fig = plt.figure(num = "Bike Simulation", figsize=(6,6), facecolor='white')
+
+def generate_lines(ax):
+    lines = []
+    for s in range(NS):
+        for i in range(NS):
+            line, = ax.plot([pos[s,0],pos[i,0]],[pos[s,1],pos[i,1]], color ='blue', linewidth=LINE_MIN, linestyle="-")
+            lines.append(line)
+
+    return lines
 
 def init():
     global size, scat, line
@@ -32,10 +41,8 @@ def init():
     size = np.linspace(SIZE_MIN, SIZE_MAX, NS)
 
     # Scatter plot
-    line1, = ax.plot([0.5,0.8],[0.5,0.7], color ='blue', linewidth=LINE_MIN, linestyle="-")
-    line2, = ax.plot([0.9,0.8],[0.1,0.7], color ='blue', linewidth=LINE_MIN, linestyle="-")
     scat = ax.scatter(pos[:,0], pos[:,1], s=size, facecolors=color)
-    line = [line1, line2]
+    line = generate_lines(ax)
 
     # Ensure limits are [0,1] and remove ticks
     ax.set_xlim(0, 1), ax.set_xticks([])

@@ -11,7 +11,7 @@ class Scheduler:
         self.station_table = init_table(n, p)
         self.alpha = alpha
         self.beta = beta
-        self.last_assignment = np.array([0] * n)
+        self.last_assignment = np.array([100] * n)
         self.virtual_model = np.zeros((p,n,n))
         self.last_q = 0
         self.w1 = 1.0

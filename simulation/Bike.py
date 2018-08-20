@@ -209,14 +209,14 @@ class BikeScheduler:
         # 1 Do nothing for scheduling
         # schedules = []
         # for i in range(NUM_STATIONS):
-            # schedules.append(INIT_NUM)
+        #     schedules.append(INIT_NUM)
 
         # 2 Simple naive greedy method
-        # schedules = algo.naive_scheduler(remains, rewards)
+        schedules = algo.naive_scheduler(remains, rewards)
         # print(schedules)
 
         # 3 Reinforcement Learning
-        schedules = algo.rf_learning(np.ceil(flows), np.array(rewards))
+        # schedules = algo.rf_learning(np.ceil(flows), np.array(rewards))
         # print(schedules)
 
         return schedules # A set of how much bikes for each station
@@ -393,8 +393,8 @@ def main():
 
     print(TOTAL_REWARDS_EACHDAY)
     # record_json(TOTAL_REWARDS_EACHDAY, "no")
-    # record_json(TOTAL_REWARDS_EACHDAY, "naive")
-    record_json(TOTAL_REWARDS_EACHDAY, "rl")
+    record_json(TOTAL_REWARDS_EACHDAY, "naive")
+    # record_json(TOTAL_REWARDS_EACHDAY, "rl")
 
 if __name__ == '__main__':
     main()
