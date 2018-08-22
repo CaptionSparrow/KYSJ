@@ -1,4 +1,5 @@
-FILE = 'stations.txt'
+# FILE = 'stations.txt'
+FILE = 'tiny_stat.txt'
 
 def line_handler(line):
 	if line.startswith('-'):

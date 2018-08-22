@@ -15,7 +15,8 @@ NUM_STATIONS = len(POSITIONS)
 INIT_NUM = 500
 NUM_BIKES = NUM_STATIONS * INIT_NUM
 SLICES = 48
-TIME = 10000
+# TIME = 10000
+TIME = 1500
 
 CALL_SCHEDULER = []
 
@@ -68,6 +69,12 @@ def init_caller(env):
     for i in range(NUM_STATIONS):
         CALL_SCHEDULER[i] = env.event()
 
+
+def record_transports():
+    with open('data/transports', 'a') as f:
+        # f.write(ALL_FLOWS)
+        # f.write('\n')
+        print(ALL_FLOWS, file = f)
 
 def record_total_rewards():
     reward = 0
@@ -236,6 +243,7 @@ class BikeScheduler:
             # print(schedules)
 
             # Init samples and rewards
+            record_transports() # record the transports before initial
             init_samples()
             init_rewards()
             init_allflows()
@@ -333,8 +341,13 @@ class Station:
             order = sorted(preorder.items(), key=lambda item:item[1])
             time = 0
             for dest in order:
+                # when they are at start
+                # s = getStationFromIndex(dest[0])
+                # ALL_FLOWS[self.slice][self.idx][s.getIndex()] = scheme[dest[0]]
+
                 yield self.env.timeout(dest[1] - time)
                 time = dest[1]
+                # when they are at terminate
                 s = getStationFromIndex(dest[0])
                 ALL_FLOWS[self.slice][self.idx][s.getIndex()] = scheme[dest[0]]
                 yield s.bikes.put(scheme[dest[0]])
@@ -393,7 +406,7 @@ def main():
 
     print(TOTAL_REWARDS_EACHDAY)
     # record_json(TOTAL_REWARDS_EACHDAY, "no")
-    record_json(TOTAL_REWARDS_EACHDAY, "naive")
+    # record_json(TOTAL_REWARDS_EACHDAY, "naive")
     # record_json(TOTAL_REWARDS_EACHDAY, "rl")
 
 if __name__ == '__main__':
