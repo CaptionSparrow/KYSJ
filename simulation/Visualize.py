@@ -6,7 +6,7 @@ from matplotlib import animation
 
 SIZE_MIN = 50
 SIZE_MAX = 500
-SIZE_INI = 1000
+SIZE_INI = 500
 LINE_MIN = 0.2 # 0
 LINE_MAX = 2.0 # 10
 NS = 4
@@ -61,9 +61,11 @@ def update(frame):
     # size += (SIZE_MAX - SIZE_MIN) / NS
 
     # Set line widths
-    # for i in range(NS):
-    #     for j in range(NS):
-    line[1].set_linewidth(10)
+    for i in range(NS):
+        for j in range(NS):
+            width = (DATAS[day][time][i][j] + DATAS[day][time][j][i]) / 10 + 0.2
+            line[i * 4 + j].set_linewidth(width)
+    # line[1].set_linewidth(10)
 
     # Reset specific ring
     for i in range(NS):
@@ -71,6 +73,8 @@ def update(frame):
         n_size = o_size - sum([DATAS[day][time][i][j] for j in range(NS)]) \
                 + sum([DATAS[day][time][j][i] for j in range(NS)])
         if n_size < 0:
+            print(day)
+            print(time)
             print(n_size)
         size[i] = n_size #* 2 # * 4.5 + 50
 
@@ -83,7 +87,7 @@ def update(frame):
     if time >= 48:
         time = 0
         day += 1
-    if day >= 10:
+    if day >= 7:
         day = 0
         size = np.linspace(SIZE_INI, SIZE_INI, NS)
 
