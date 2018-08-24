@@ -7,14 +7,13 @@ from matplotlib import animation
 SIZE_MIN = 50
 SIZE_MAX = 500
 SIZE_INI = 500
-LINE_MIN = 0.2 # 0
-LINE_MAX = 2.0 # 10
+LINE_MIN = 0.2
+LINE_MAX = 2.0
 NS = 4
 
 INIT = 500
 DATAS = []
 
-# pos = np.random.uniform(0, 1, (NS, 2))
 pos = np.array([[0.76,0.66], [0.23,0.48], [0.31,0.12], [0.46,0.83]])
 color = np.ones((NS, 4)) * (0, 0, 0, 1)
 color[:,0] = np.linspace(0, 0.5, NS)
@@ -34,8 +33,6 @@ def generate_lines(ax):
 
 def init():
     global size, scat, line, time, day
-
-    # print(pos)
 
     # New axis over the whole figure, no frame and a 1:1 aspect ratio
     ax = fig.add_axes([0, 0, 1, 1], frameon = False, aspect = 1)
@@ -57,15 +54,12 @@ def init():
 
 def update(frame):
     global size, time, day
-    # Each ring is made larger
-    # size += (SIZE_MAX - SIZE_MIN) / NS
 
     # Set line widths
     for i in range(NS):
         for j in range(NS):
             width = (DATAS[day][time][i][j] + DATAS[day][time][j][i]) / 10 + 0.2
             line[i * 4 + j].set_linewidth(width)
-    # line[1].set_linewidth(10)
 
     # Reset specific ring
     for i in range(NS):
@@ -79,7 +73,6 @@ def update(frame):
         size[i] = n_size #* 2 # * 4.5 + 50
 
     # Update scatter object
-    # scat.set_edgecolors(color)
     scat.set_sizes(size)
     scat.set_offsets(pos)
 
